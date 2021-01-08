@@ -12,6 +12,8 @@ import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import { mainListItems, secondaryListItems } from './listItems';
+import { authMainListItems, authSecondaryListItems } from './authListItems';
+import { useAuthState, useAuthDispatch } from '../contexts/AuthContext';
 
 const drawerWidth = 240;
 
@@ -79,6 +81,8 @@ const NavBar = () => {
   const classes = useStyle();
   const [open, setOpen] = useState(false);
   const history = useHistory();
+  const { isAuth } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
@@ -86,7 +90,10 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       const res = await Axios.get('/auth/logout');
-      if (res.status === 200) history.push('/');
+      if (res.status === 200) {
+        dispatch('Logout');
+        history.push('/');
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);
@@ -111,9 +118,15 @@ const NavBar = () => {
             DashBoard
           </Typography>
 
-          <IconButton color="inherit" onClick={handleLogout}>
-            <ExitToAppIcon />
-          </IconButton>
+          {
+            isAuth
+              ? (
+                <IconButton color="inherit" onClick={handleLogout}>
+                  <ExitToAppIcon />
+                </IconButton>
+              )
+              : null
+          }
 
         </Toolbar>
       </AppBar>
@@ -134,9 +147,9 @@ const NavBar = () => {
         <Divider className={classes.divider} />
 
         <Box pt={4}>
-          <List>{mainListItems}</List>
+          <List>{ isAuth ? authMainListItems : mainListItems}</List>
           <Divider className={classes.divider} />
-          <List>{secondaryListItems }</List>
+          <List>{ isAuth ? authSecondaryListItems : secondaryListItems}</List>
         </Box>
       </Drawer>
     </div>

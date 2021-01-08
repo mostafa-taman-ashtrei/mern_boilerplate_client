@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { makeStyles, CssBaseline } from '@material-ui/core';
 import Axios from 'axios';
 
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/NavBar';
 import Home from './pages/Home/index';
 import Login from './pages/Login';
@@ -26,15 +27,17 @@ const App = () => {
 
   return (
     <Router>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Navbar />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-        </Switch>
-      </div>
+      <AuthProvider>
+        <div className={classes.root}>
+          <CssBaseline />
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </Switch>
+        </div>
+      </AuthProvider>
     </Router>
   );
 };
