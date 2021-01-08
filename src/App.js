@@ -5,6 +5,8 @@ import Axios from 'axios';
 
 import Navbar from './components/NavBar';
 import Home from './pages/Home/index';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 Axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 Axios.defaults.withCredentials = true;
@@ -29,6 +31,8 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
       </div>
     </Router>

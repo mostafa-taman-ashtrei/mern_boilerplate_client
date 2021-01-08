@@ -33,13 +33,13 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link style={{ textDecoration: 'None', color: 'inherit' }} to="/signup">
+    <Link style={{ textDecoration: 'None', color: 'inherit' }} to="/register">
       <ListItem button>
         <ListItemIcon>
           <VpnKeyIcon />
         </ListItemIcon>
         <div className="w-100 text-center mt-2">
-          <ListItemText primary="Signup" />
+          <ListItemText primary="Register" />
         </div>
       </ListItem>
     </Link>
