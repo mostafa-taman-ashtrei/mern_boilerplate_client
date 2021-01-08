@@ -92,7 +92,7 @@ const NavBar = () => {
       const res = await Axios.get('/auth/logout');
       if (res.status === 200) {
         dispatch('Logout');
-        history.push('/');
+        history.push('/login');
       }
     } catch (e) {
       // eslint-disable-next-line no-console
