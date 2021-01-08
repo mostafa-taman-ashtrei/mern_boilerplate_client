@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import { mainListItems, secondaryListItems } from './listItems';
 
@@ -76,12 +78,19 @@ const useStyle = makeStyles((theme) => ({
 const NavBar = () => {
   const classes = useStyle();
   const [open, setOpen] = useState(false);
+  const history = useHistory();
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
   const handleLogout = async () => {
-    console.log('ok');
+    try {
+      const res = await Axios.get('/auth/logout');
+      if (res.status === 200) history.push('/');
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
   };
 
   return (

@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,10 +36,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   loading: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
+    width: '80%',
+    marginTop: '80px',
   },
 }));
 
@@ -46,6 +45,8 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
   const classes = useStyles();
 
@@ -54,18 +55,22 @@ const Login = () => {
 
     try {
       setError('');
+      setLoading(true);
       const data = {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
       };
 
       const res = await Axios.post('auth/login', data);
-      console.log(res);
-      history.push('/');
+      if (res.status === 200) history.push('/');
     } catch {
       setError('Failed to log in');
     }
+
+    return setLoading(false);
   }
+
+  if (loading) return <div className={classes.loading}><LinearProgress /></div>;
 
   return (
     <Container component="main" maxWidth="xs">

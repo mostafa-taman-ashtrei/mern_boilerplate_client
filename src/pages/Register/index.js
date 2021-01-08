@@ -36,10 +36,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   loading: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
+    width: '80%',
+    marginTop: '80px',
   },
 }));
 
@@ -81,10 +79,6 @@ function Register() {
 
       const res = await Axios.post('auth/register', data);
       if (res.status === 200) history.push('/');
-    //   Axios.post('auth/signup', data)
-    //     .then(() => {
-    //       history.push('/');
-    //     });
     } catch {
       setError('Failed to create an account');
     }
